@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE digester-rules PUBLIC "-//Jakarta Apache //DTD digester-rules XML V1.0//EN" "digester-rules.dtd">
+<digester-rules>
+	<object-create-rule pattern="sites" classname="java.util.ArrayList" />
+	<pattern value="sites/site">
+		<object-create-rule classname="org.anttribe.opengadget.runtime.core.Site" />
+		<set-properties-rule />
+		<pattern value="page">
+			<object-create-rule classname="org.anttribe.opengadget.runtime.core.Page" />
+			<set-properties-rule />
+			<pattern value="page">
+				<object-create-rule classname="org.anttribe.opengadget.runtime.core.Page" />
+				<set-properties-rule />
+				<pattern value="page">
+					<object-create-rule classname="org.anttribe.opengadget.runtime.core.Page" />
+					<set-properties-rule />
+					<pattern value="position">
+						<object-create-rule
+							classname="org.anttribe.opengadget.runtime.core.Position" />
+						<set-properties-rule />
+						<pattern value="gadget">
+							<object-create-rule classname="org.anttribe.opengadget.runtime.core.Gadget" />
+							<set-properties-rule />
+							<set-next-rule methodname="addGadget" />
+						</pattern>
+						<set-next-rule methodname="addPosition" />
+					</pattern>
+					<set-next-rule methodname="addChildPage" />
+				</pattern>
+				<pattern value="position">
+					<object-create-rule classname="org.anttribe.opengadget.runtime.core.Position" />
+					<set-properties-rule />
+					<pattern value="gadget">
+						<object-create-rule classname="org.anttribe.opengadget.runtime.core.Gadget" />
+						<set-properties-rule />
+						<set-next-rule methodname="addGadget" />
+					</pattern>
+					<set-next-rule methodname="addPosition" />
+				</pattern>
+				<set-next-rule methodname="addChildPage" />
+			</pattern>
+			<pattern value="position">
+				<object-create-rule classname="org.anttribe.opengadget.runtime.core.Position" />
+				<set-properties-rule />
+				<pattern value="gadget">
+					<object-create-rule classname="org.anttribe.opengadget.runtime.core.Gadget" />
+					<set-properties-rule />
+					<set-next-rule methodname="addGadget" />
+				</pattern>
+				<set-next-rule methodname="addPosition" />
+			</pattern>
+			<set-next-rule methodname="addPage" />
+		</pattern>
+		<set-next-rule methodname="add" />
+	</pattern>
+</digester-rules>
