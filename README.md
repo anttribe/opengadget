@@ -1,0 +1,2 @@
+# opengadget
+opengadget-利用springMVC构建一个基于Gagdet的平台框架
