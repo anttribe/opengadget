@@ -88,9 +88,9 @@ public class MybatisAbstractEntity implements Entity
      * @param entities List<Entity>
      * @return int
      */
-    public static int batchSave(Class<? extends Entity> entityClass, List<Entity> entities)
+    public static int batchSave(Class<? extends Entity> entityClass, List<? extends Entity> entities)
     {
-        String statement = (new StringBuffer(entityClass.getCanonicalName())).append(".insert").toString();
+        String statement = (new StringBuffer(entityClass.getCanonicalName())).append(".batchInsert").toString();
         return getSqlSessionTemplate().insert(statement, entities);
     }
     
@@ -101,9 +101,9 @@ public class MybatisAbstractEntity implements Entity
      * @param entities List<Entity>
      * @return int
      */
-    public static int batchUpdate(Class<? extends Entity> entityClass, List<Entity> entities)
+    public static int batchUpdate(Class<? extends Entity> entityClass, List<? extends Entity> entities)
     {
-        String statement = (new StringBuffer(entityClass.getCanonicalName())).append(".update").toString();
+        String statement = (new StringBuffer(entityClass.getCanonicalName())).append(".batchUpdate").toString();
         return getSqlSessionTemplate().insert(statement, entities);
     }
     
@@ -114,9 +114,9 @@ public class MybatisAbstractEntity implements Entity
      * @param entities List<Entity>
      * @return int
      */
-    public static int batchRemove(Class<? extends Entity> entityClass, List<Entity> entities)
+    public static int batchRemove(Class<? extends Entity> entityClass, List<? extends Entity> entities)
     {
-        String statement = (new StringBuffer(entityClass.getCanonicalName())).append(".delete").toString();
+        String statement = (new StringBuffer(entityClass.getCanonicalName())).append(".batchDelete").toString();
         return getSqlSessionTemplate().insert(statement, entities);
     }
     
