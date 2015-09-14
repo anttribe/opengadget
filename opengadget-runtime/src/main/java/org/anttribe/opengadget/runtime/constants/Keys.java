@@ -31,6 +31,11 @@ public final class Keys
     public static final String KEY_CURRENTPAGE = "currentPage";
     
     /**
+     * 当前皮肤
+     */
+    public static final String KEY_CURRENT_THEME = "theme";
+    
+    /**
      * SESSION_REDIRECTATTRIBUTES
      */
     public static final String SESSION_REDIRECTATTRIBUTES = "refirectAttributes";

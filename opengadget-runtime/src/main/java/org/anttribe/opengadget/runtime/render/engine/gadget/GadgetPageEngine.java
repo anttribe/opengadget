@@ -14,11 +14,13 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.anttribe.opengadget.runtime.common.WebUtils;
 import org.anttribe.opengadget.runtime.constants.Keys;
 import org.anttribe.opengadget.runtime.core.Gadget;
 import org.anttribe.opengadget.runtime.core.Page;
 import org.anttribe.opengadget.runtime.core.Position;
 import org.anttribe.opengadget.runtime.core.Site;
+import org.anttribe.opengadget.runtime.core.Theme;
 import org.anttribe.opengadget.runtime.gadget.support.Navigator;
 import org.anttribe.opengadget.runtime.render.PageFilterRequest;
 import org.anttribe.opengadget.runtime.render.RequestType;
@@ -52,13 +54,7 @@ public class GadgetPageEngine extends WebApplicationObjectSupport implements Pag
         throws PageEngineException
     {
         PageFilterRequest pageFilterRequest = (PageFilterRequest)request;
-        Site site = pageFilterRequest.getCurrentSite();
-        // 设置默认皮肤
-        if (null == site.getTheme())
-        {
-            site.setTheme(themeFactory.getDefaultTheme());
-            request.setAttribute(Keys.KEY_CURRENTSITE, site);
-        }
+        this.setTheme(pageFilterRequest, response);
         
         // 页面中Gadget请求和响应集合
         Map<String, GadgetRequest> gadgetRequestMap = new HashMap<String, GadgetRequest>();
@@ -121,6 +117,27 @@ public class GadgetPageEngine extends WebApplicationObjectSupport implements Pag
         }
         
         this.dispatchToPage(request, response);
+    }
+    
+    /**
+     * 设置主题
+     * 
+     * @param request
+     * @param response
+     */
+    private void setTheme(HttpServletRequest request, HttpServletResponse response)
+    {
+        PageFilterRequest pageFilterRequest = (PageFilterRequest)request;
+        Site site = pageFilterRequest.getCurrentSite();
+        Theme theme = site.getTheme();
+        // 设置默认皮肤
+        if (null == theme)
+        {
+            theme = themeFactory.getDefaultTheme();
+        }
+        site.setTheme(theme);
+        request.setAttribute(Keys.KEY_CURRENTSITE, site);
+        WebUtils.addCookie(response, "", "/", true, Keys.KEY_CURRENT_THEME, theme.getName(), 0);
     }
     
     /**

@@ -44,7 +44,7 @@ public class PageFilter extends OncePerRequestFilter
      */
     private static final String[] DEFAULT_EXCLUDES = new String[] {".css", ".js", ".jsp", ".vm", ".ftl", ".doc",
         ".xls", ".ppt", ".docx", ".xlsx", ".pptx", ".zip", ".rar", ".swf", ".ico", ".jpg", ".png", ".jpeg", ".gif",
-        ".bmp", ".eot", ".svg", ".tff", ".woff", ".map", ".woff2"};
+        ".bmp", ".ico", ".eot", ".svg", ".tff", ".woff", ".map", ".woff2"};
     
     /**
      * 排除后缀列表
