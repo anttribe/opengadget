@@ -128,7 +128,7 @@ public class PageFilterRequest extends HttpServletRequestWrapper
             currentSiteName,
             currentPageName);
         
-        // 不输入站点，去默认站点和默认首页
+        // 不输入站点，取默认站点和默认首页
         if (StringUtils.isEmpty(currentSiteName))
         {
             currentSite = siteFactory.getDefaultSite();

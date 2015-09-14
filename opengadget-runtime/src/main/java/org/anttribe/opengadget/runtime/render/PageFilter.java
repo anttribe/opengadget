@@ -43,8 +43,8 @@ public class PageFilter extends OncePerRequestFilter
      * 默认排除后缀列表, 用户配置的排除列表采用追加的形式
      */
     private static final String[] DEFAULT_EXCLUDES = new String[] {".css", ".js", ".jsp", ".vm", ".ftl", ".doc",
-        ".xls", ".ppt", ".docx", ".xlsx", ".pptx", ".zip", ".rar", ".swf", ".jpg", ".png", ".jpeg", ".gif", ".bmp",
-        ".eot", ".svg", ".tff", ".woff", ".map", ".woff2"};
+        ".xls", ".ppt", ".docx", ".xlsx", ".pptx", ".zip", ".rar", ".swf", ".ico", ".jpg", ".png", ".jpeg", ".gif",
+        ".bmp", ".eot", ".svg", ".tff", ".woff", ".map", ".woff2"};
     
     /**
      * 排除后缀列表
@@ -93,7 +93,7 @@ public class PageFilter extends OncePerRequestFilter
         String requestUri = request.getRequestURI();
         if (!ArrayUtils.isEmpty(excludes))
         {
-            if(StringUtils.endsWithAny(requestUri, excludes))
+            if (StringUtils.endsWithAny(requestUri, excludes))
             {
                 filterChain.doFilter(request, response);
                 return;

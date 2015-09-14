@@ -26,6 +26,11 @@ public abstract class AbstractSiteFactory implements SiteFactory
      */
     protected Map<String, Site> cache = new HashMap<String, Site>();
     
+    /**
+     * defaultSiteName
+     */
+    private String defaultSiteName = DERFAULT_SITE_NAME;
+    
     @Override
     public Site loopup(String siteName)
     {
@@ -43,7 +48,12 @@ public abstract class AbstractSiteFactory implements SiteFactory
         {
             this.loadSiteConfigs();
         }
-        return cache.get(DERFAULT_SITE_NAME);
+        return cache.get(this.defaultSiteName);
+    }
+    
+    public void setDefaultSiteName(String defaultSiteName)
+    {
+        this.defaultSiteName = defaultSiteName;
     }
     
     /**

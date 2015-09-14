@@ -107,7 +107,7 @@ public class Site implements Serializable, Cloneable
                     @Override
                     public int compare(Page o1, Page o2)
                     {
-                        return o2.getWeight() - o1.getWeight();
+                        return o1.getWeight() - o2.getWeight();
                     }
                 });
             }
