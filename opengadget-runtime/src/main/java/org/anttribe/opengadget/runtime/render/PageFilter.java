@@ -96,7 +96,6 @@ public class PageFilter extends OncePerRequestFilter
             if (StringUtils.endsWithAny(requestUri, excludes))
             {
                 filterChain.doFilter(request, response);
-                return;
             }
         }
         
