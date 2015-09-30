@@ -109,6 +109,9 @@ public class PageFilterRequest extends HttpServletRequestWrapper
         // 得到请求的站点和页面
         if (!StringUtils.isEmpty(lookupPath) && lookupPath.startsWith("/"))
         {
+            // 去除最前面的 "/"
+            lookupPath = StringUtils.substring(lookupPath, 1);
+            
             String[] subStrings = StringUtils.split(lookupPath, "\\/");
             if (!ArrayUtils.isEmpty(subStrings))
             {
@@ -129,26 +132,37 @@ public class PageFilterRequest extends HttpServletRequestWrapper
             currentPageName);
         
         // 不输入站点，取默认站点和默认首页
-        if (StringUtils.isEmpty(currentSiteName))
+        if (StringUtils.isEmpty(currentSiteName) || null == (currentSite = siteFactory.loopup(currentSiteName)))
+        {
+            // 从session中获取当前站点
+            currentSite = (Site)this.getSession().getAttribute(Keys.KEY_CURRENTSITE);
+        }
+        if (null == currentSite)
         {
             currentSite = siteFactory.getDefaultSite();
-            if (null != currentSite)
+        }
+        
+        if (null != currentSite)
+        {
+            currentSiteName = currentSite.getName();
+            if (StringUtils.indexOf(lookupPath, currentSiteName) != -1)
+            {
+                lookupPath = StringUtils.substring(lookupPath, currentSite.getName().length() + 1);
+            }
+            currentPageName = lookupPath;
+            if (!StringUtils.isEmpty(currentPageName))
+            {
+                currentPage = currentSite.loopupPage(currentPageName);
+            }
+            else
             {
                 currentPage = currentSite.getIndexPage();
             }
         }
-        else
-        {
-            // 获取站点, 不存在的情况下，跳转默认站点
-            currentSite = siteFactory.loopup(currentSiteName);
-            if (null != currentSite)
-            {
-                currentPage = currentSite.loopupPage(currentPageName);
-            }
-        }
+        
         this.setAttributes();
         
-        LOGGER.debug("While parsing request, currentSite: {}, currentPage: {}.", currentSite, currentPage);
+        LOGGER.debug("While parsing request, currentSite: {}, currentPage: {}.", currentSiteName, currentPageName);
     }
     
     /**
@@ -159,6 +173,8 @@ public class PageFilterRequest extends HttpServletRequestWrapper
         super.setAttribute(Keys.KEY_CONTEXTPATH, urlPathHelper.getContextPath(this));
         super.setAttribute(Keys.KEY_CURRENTSITE, currentSite);
         super.setAttribute(Keys.KEY_CURRENTPAGE, currentPage);
+        
+        this.getSession().setAttribute(Keys.KEY_CURRENTSITE, currentSite);
     }
     
     /**

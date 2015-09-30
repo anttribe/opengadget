@@ -111,10 +111,7 @@ public class Page implements Serializable, Cloneable
         }
         
         page.setParent(this);
-        if (page.getWeight() == 0)
-        {
-            page.setWeight(childPages.size());
-        }
+        page.setWeight(childPages.size());
         this.childPages.put(page.getName(), page);
         
         List<Map.Entry<String, Page>> temp = new ArrayList<Map.Entry<String, Page>>(childPages.entrySet());

@@ -86,10 +86,7 @@ public class Site implements Serializable, Cloneable
             LOGGER.warn("While adding page to site {}, the page name is null.", this.getName());
             return;
         }
-        if (page.getWeight() == 0)
-        {
-            page.setWeight(pages.size());
-        }
+        page.setWeight(pages.size());
         this.pages.put(page.getName(), page);
     }
     
@@ -115,7 +112,7 @@ public class Site implements Serializable, Cloneable
                     }
                 });
             }
-            return tempPages.get(0);
+            return Page.getIndexPageFromPage(tempPages.get(0));
         }
         return null;
     }
